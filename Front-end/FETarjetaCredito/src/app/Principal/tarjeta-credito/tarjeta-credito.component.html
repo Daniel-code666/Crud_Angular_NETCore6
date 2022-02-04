@@ -1,0 +1,107 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h3 style="font-weight: bolder;">Tarjeta Crédito</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 style="font-weight: bold; text-align: center;">{{accion}} tarjeta</h5>
+
+                    <form [formGroup]="form" (ngSubmit)="guardarTarjeta()">
+                        <div class="input-group input-group-lg mb-3">
+                            <span class="input-group-text">
+                                <i class="far fa-user" 
+                                    [class.green-icon]="this.form.get('titular')?.valid"
+                                    [class.red-icon]="this.form.get('titular')?.invalid && 
+                                    this.form.get('titular')?.touched"
+                                ></i>
+                            </span>
+                            <input formControlName="titular" type="text" class="form-control" placeholder="Username">
+                        </div>
+                        <div class="input-group input-group-lg mb-3">
+                            <span class="input-group-text">
+                                <i class="fas fa-credit-card"
+                                    [class.green-icon]="this.form.get('numeroTarjeta')?.valid"
+                                    [class.red-icon]="this.form.get('numeroTarjeta')?.invalid && 
+                                    this.form.get('numeroTarjeta')?.touched"
+                                ></i>
+                            </span>
+                            <input formControlName="numeroTarjeta" type="text" class="form-control" 
+                                placeholder="Número de tarjeta" maxlength="16" minlength="16">
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-7">
+                                <div class="input-group input-group-lg mb-3">
+                                    <span class="input-group-text">
+                                        <i class="far fa-calendar"
+                                            [class.green-icon]="this.form.get('fechaExpiracion')?.valid"
+                                            [class.red-icon]="this.form.get('fechaExpiracion')?.invalid && 
+                                            this.form.get('fechaExpiracion')?.touched"
+                                        ></i>
+                                    </span>
+                                    <input formControlName="fechaExpiracion" type="text" class="form-control" 
+                                    placeholder="MM/YY" maxlength="5" minlength="5">
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                                <div class="input-group input-group-lg mb-3">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-key"
+                                            [class.green-icon]="this.form.get('cvv')?.valid"
+                                            [class.red-icon]="this.form.get('cvv')?.invalid && 
+                                            this.form.get('cvv')?.touched"
+                                        ></i>
+                                    </span>
+                                    <input formControlName="cvv" type="password" class="form-control" 
+                                        placeholder="CVV" maxlength="3" minlength="3">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button [disabled]="this.form.invalid" type="submit" class="btn btn-success btn-sm">
+                                Aceptar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 style="font-weight: bold; text-align: center;">Listado de tarjetas</h5>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <td>Titular</td>
+                                <td>Número de tarjeta</td>
+                                <td>Fecha de expiración</td>
+                                <td>Opciones</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let t of listadoTarjetas">
+                                <td>{{t.titular}}</td>
+                                <td>{{t.numeroTarjeta}}</td>
+                                <td>{{t.fechaExpiracion}}</td>
+                                <td>
+                                    <i (click)="editTarjeta(t)" class="far fa-edit text-info" style="margin-right: 35px;"></i>
+                                    <i (click)="deleteTarjeta(t.id)" class="far fa-trash-alt text-danger"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
